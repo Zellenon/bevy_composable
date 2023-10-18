@@ -23,7 +23,7 @@ macro_rules! CT {
     };
 }
 
-#[derive(Clone)]
+#[derive(Clone, Default)]
 pub struct ComponentTree {
     pub commands: Vec<EntityCommandSet>,
     pub children: Vec<ComponentTree>,
@@ -67,15 +67,6 @@ impl ops::Shl<ComponentTree> for ComponentTree {
         Self {
             commands: self.commands,
             children: [self.children.as_slice(), vec![rhs].as_slice()].concat(),
-        }
-    }
-}
-
-impl Default for ComponentTree {
-    fn default() -> Self {
-        ComponentTree {
-            commands: Vec::default(),
-            children: Vec::default(),
         }
     }
 }

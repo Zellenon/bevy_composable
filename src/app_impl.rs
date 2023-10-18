@@ -33,7 +33,7 @@ pub fn from<T>(value: impl Component<Storage = T> + Clone) -> EntityCommandSet {
     let func = move |parent: &mut EntityCommands| {
         parent.insert(value.clone());
     };
-    (Arc::new(func) as EntityCommandSet).into()
+    Arc::new(func) as EntityCommandSet
 }
 
 pub trait ComponentTreeable {
