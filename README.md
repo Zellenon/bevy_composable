@@ -25,7 +25,7 @@ fn main() {
 
 ```
 
-The [full_collection](bevy_composable/examples/full_collection.rs) example showcases all the different kinds of fields that an asset collection can contain using only derive macro attributes.
+The [example](example) example showcases all the different kinds of fields that an asset collection can contain using only derive macro attributes.
 
 ## Compatible Bevy versions
 
