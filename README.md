@@ -7,12 +7,12 @@
 
 This [Bevy][bevy] library trivializes the process of making, storing, and combining 'prefabs' for game entities that are made of often-reused groups of components configured in a given fashion. The crate provides the `CT!` macro, allowing you to turn components into nodes that form a "composable tree", allowing you to create/store/combine heirarchical information in a single data structure.
 
-In most cases you will want to {recommended use???}
+In most cases you will want to (we're still working on recommended uses)
 
-The `main` branch and the latest release support Bevy version `0.11`.
+The `main` branch and the latest release support Bevy version `0.14`.
 The oldest bevy version supported is `0.11`
 
-{example code???}
+{example code coming}
 ```rust no_run
 use bevy::prelude::*;
 use bevy_composable::*;
@@ -32,7 +32,7 @@ The [example](example) example showcases all the different kinds of fields that 
 | `bevy_composable` | `bevy` |
 | :--                 | :--   |
 | `0.1` -               | `0.11` |
-| branch `main`         | `0.11` |
+| branch `main`         | `0.14` |
 
 ## License
 
