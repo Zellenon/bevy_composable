@@ -29,7 +29,7 @@ fn spawn_complex_inner(entity: &mut EntityCommands, component_tree: &ComponentTr
     }
 }
 
-pub fn from<T>(value: impl Component<Storage = T> + Clone) -> EntityCommandSet {
+pub fn from<T>(value: impl Component + Clone) -> EntityCommandSet {
     let func = move |parent: &mut EntityCommands| {
         parent.insert(value.clone());
     };
@@ -40,9 +40,9 @@ pub trait ComponentTreeable {
     fn tree(self) -> ComponentTree;
 }
 
-impl<W, T> ComponentTreeable for W
+impl<W> ComponentTreeable for W
 where
-    W: Component<Storage = T> + Clone,
+    W: Component + Clone,
 {
     fn tree(self) -> ComponentTree {
         let func = move |parent: &mut EntityCommands| {
