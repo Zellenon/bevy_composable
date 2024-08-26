@@ -42,9 +42,9 @@ pub trait ComponentTreeable {
 
 impl<W> ComponentTreeable for W
 where
-    W: Component + Clone,
+    W: Bundle + Clone,
 {
-    fn tree(self) -> ComponentTree {
+    fn store(self) -> ComponentTree {
         let func = move |parent: &mut EntityCommands| {
             parent.insert(self.clone());
         };
