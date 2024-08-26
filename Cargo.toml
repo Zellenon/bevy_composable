@@ -7,3 +7,6 @@ edition = "2021"
 
 [dependencies]
 bevy = {version = "0.14"} # Find a way to disable this for release
+
+[dev-dependencies]
+bevy-inspector-egui = {version = "0.25"} # Find a way to disable this for release
