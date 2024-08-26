@@ -51,3 +51,19 @@ where
         (Arc::new(func) as EntityCommandSet).into()
     }
 }
+
+pub trait FuncTreeable {
+    fn store() -> ComponentTree;
+}
+
+impl<W> FuncTreeable for W
+where
+    W: Bundle + Default,
+{
+    fn store() -> ComponentTree {
+        let func = move |parent: &mut EntityCommands| {
+            parent.insert(Self::default());
+        };
+        (Arc::new(func) as EntityCommandSet).into()
+    }
+}
