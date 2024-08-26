@@ -3,10 +3,9 @@ name = "bevy_composable"
 version = "0.2.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-bevy = {version = "0.14"} # Find a way to disable this for release
+bevy = {version = "0.14"} 
 
 [dev-dependencies]
-bevy-inspector-egui = {version = "0.25"} # Find a way to disable this for release
+bevy-inspector-egui = {version = "0.25"} 
