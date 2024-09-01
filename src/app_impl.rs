@@ -6,25 +6,32 @@ use bevy::prelude::*;
 use crate::tree::{ComponentTree, EntityCommandSet};
 
 pub trait ComplexSpawnable {
-    fn spawn_complex(&mut self, tree: ComponentTree) -> Entity;
+    fn compose(&mut self, tree: ComponentTree) -> Entity;
 }
 
 impl ComplexSpawnable for Commands<'_, '_> {
-    fn spawn_complex(&mut self, tree: ComponentTree) -> Entity {
+    fn compose(&mut self, tree: ComponentTree) -> Entity {
         let entity = &mut self.spawn_empty();
-        spawn_complex_inner(entity, &tree);
+        compose_inner(entity, &tree);
         entity.id()
     }
 }
 
-pub(crate) fn spawn_complex_inner(entity: &mut EntityCommands, component_tree: &ComponentTree) {
+impl ComplexSpawnable for EntityCommands<'_> {
+    fn compose(&mut self, tree: ComponentTree) -> Entity {
+        compose_inner(self, &tree);
+        self.id()
+    }
+}
+
+pub(crate) fn compose_inner(entity: &mut EntityCommands, component_tree: &ComponentTree) {
     for command in component_tree.commands.iter() {
         command(entity);
     }
     for child in component_tree.children.iter() {
         entity.with_children(|w| {
             let mut child_entity = w.spawn_empty();
-            spawn_complex_inner(&mut child_entity, child);
+            compose_inner(&mut child_entity, child);
         });
     }
 }
@@ -37,16 +44,32 @@ pub fn from<T>(value: impl Component + Clone) -> EntityCommandSet {
 }
 
 pub trait ComponentTreeable {
-    fn tree(self) -> ComponentTree;
+    fn store(self) -> ComponentTree;
 }
 
 impl<W> ComponentTreeable for W
 where
-    W: Component + Clone,
+    W: Bundle + Clone,
 {
-    fn tree(self) -> ComponentTree {
+    fn store(self) -> ComponentTree {
         let func = move |parent: &mut EntityCommands| {
             parent.insert(self.clone());
+        };
+        (Arc::new(func) as EntityCommandSet).into()
+    }
+}
+
+pub trait FuncTreeable {
+    fn store() -> ComponentTree;
+}
+
+impl<W> FuncTreeable for W
+where
+    W: Bundle + Default,
+{
+    fn store() -> ComponentTree {
+        let func = move |parent: &mut EntityCommands| {
+            parent.insert(Self::default());
         };
         (Arc::new(func) as EntityCommandSet).into()
     }
