@@ -17,7 +17,7 @@ impl ComplexSpawnable for Commands<'_, '_> {
     }
 }
 
-fn spawn_complex_inner(entity: &mut EntityCommands, component_tree: &ComponentTree) {
+pub(crate) fn spawn_complex_inner(entity: &mut EntityCommands, component_tree: &ComponentTree) {
     for command in component_tree.commands.iter() {
         command(entity);
     }
