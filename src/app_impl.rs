@@ -60,14 +60,14 @@ where
 }
 
 pub trait FuncTreeable {
-    fn store() -> ComponentTree;
+    fn store_default() -> ComponentTree;
 }
 
 impl<W> FuncTreeable for W
 where
     W: Bundle + Default,
 {
-    fn store() -> ComponentTree {
+    fn store_default() -> ComponentTree {
         let func = move |parent: &mut EntityCommands| {
             parent.insert(Self::default());
         };
