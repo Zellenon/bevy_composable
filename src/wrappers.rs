@@ -1,5 +1,6 @@
+use bevy::ecs::name::Name;
+
 use crate::app_impl::ComponentTreeable;
-use bevy::core::Name;
 
 use crate::tree::ComponentTree;
 

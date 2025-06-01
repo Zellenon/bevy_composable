@@ -4,16 +4,15 @@
 use bevy::{
     app::{App, AppExit, Startup},
     color::Color,
-    core::Name,
     prelude::{ClearColor, Commands, Component, PluginGroup},
     DefaultPlugins,
 };
-use bevy_composable::{app_impl::ComponentTreeable, wrappers::name};
 use bevy_composable::{
-    app_impl::{ComplexSpawnable, FuncTreeable},
+    app_impl::{ComplexSpawnable, ComponentTreeable, FuncTreeable},
     tree::ComponentTree,
+    wrappers::name,
 };
-use bevy_inspector_egui::quick::WorldInspectorPlugin;
+use bevy_inspector_egui::{bevy_egui::EguiPlugin, quick::WorldInspectorPlugin};
 
 #[derive(Component, Default, Clone)]
 pub struct BodyPart;
@@ -44,6 +43,9 @@ pub fn main() -> AppExit {
     )));
 
     app.add_systems(Startup, compose_demonstration);
+    app.add_plugins(EguiPlugin {
+        enable_multipass_for_primary_context: true,
+    });
     app.add_plugins(WorldInspectorPlugin::new());
 
     app.run()
