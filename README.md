@@ -5,14 +5,19 @@
 [![license](https://img.shields.io/crates/l/bevy_composable)](https://github.com/zellenon/bevy_composable#license)
 [![crates.io](https://img.shields.io/crates/d/bevy_composable.svg)](https://crates.io/crates/bevy_composable)
 
-This [Bevy][bevy] library trivializes the process of making, storing, and combining 'prefabs' for game entities that are made of often-reused groups of components configured in a given fashion. The crate provides the `CT!` macro, allowing you to turn components into nodes that form a "composable tree", allowing you to create/store/combine heirarchical information in a single data structure.
+This [Bevy][bevy] library trivializes the process of making, storing, and
+combining 'prefabs' for game entities that are made of often-reused groups of
+components configured in a given fashion. The `.store()` function, implemented
+for all Bundles, allows you to turn a Bundle into a "component tree" which can
+be stored (thread-safe!) and cloned, able to be spawned later via the `compose`
+command.
 
-In most cases you will want to (we're still working on recommended uses)
+No Plugin is necessary! You'll just need to import the trait which adds
+`compose` to `commands` (the ComplexSpawnable trait in app_impl).
 
-The `main` branch and the latest release support Bevy version `0.14`.
-The oldest bevy version supported is `0.11`
+The `main` branch and the latest release support Bevy version `0.16`. The oldest
+bevy version supported is `0.11`
 
-{example code coming}
 ```rust no_run
 use bevy::prelude::*;
 use bevy_composable::*;
@@ -22,28 +27,30 @@ fn main() {
         .add_plugins(DefaultPlugins)
         .run();
 }
-
 ```
 
-The [example](example) example showcases all the different kinds of fields that an asset collection can contain using only derive macro attributes.
+The [example](example) example showcases all the different kinds of fields that
+an asset collection can contain using only derive macro attributes.
 
 ## Compatible Bevy versions
 
 | `bevy_composable` | `bevy` |
-| :--                 | :--   |
-| `0.1` -               | `0.11` |
-| branch `main`         | `0.14` |
+| :---------------- | :----- |
+| `0.1` -           | `0.11` |
+| `0.2` -           | `0.13` |
+| `0.3` -           | `0.14` |
+| `0.4` -           | `0.15` |
+| branch `main`     | `0.16` |
 
 ## License
 
-- MIT license ([LICENSE-MIT](/LICENSE-MIT) or https://opensource.org/licenses/MIT)
+- MIT license ([LICENSE-MIT](/LICENSE-MIT) or
+  https://opensource.org/licenses/MIT)
 
 ## Contribution
 
 Unless you explicitly state otherwise, any contribution intentionally submitted
-for inclusion in the work by you, as defined in the MIT license, shall be dual licensed as above, without any
-additional terms or conditions.
-
-
+for inclusion in the work by you, as defined in the MIT license, shall be dual
+licensed as above, without any additional terms or conditions.
 
 [bevy]: https://bevyengine.org/
