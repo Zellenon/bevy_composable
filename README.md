@@ -22,10 +22,16 @@ bevy version supported is `0.11`
 use bevy::prelude::*;
 use bevy_composable::*;
 
-fn main() {
-    App::new()
-        .add_plugins(DefaultPlugins)
-        .run();
+fn startup_system(mut commands: Commands) {
+    commands.compose(com_tree_function(some_args) + other_function());
+}
+
+fn com_tree_function(some_args: usize) -> ComponentTree {
+    (Bundle1, Bundle2(some_args + 5)).store()
+}
+
+fn com_tree_function() -> ComponentTree {
+    (Bundle1, Bundle2, Bundle3::default(), Bundle4(x,y,z)).store()
 }
 ```
 
