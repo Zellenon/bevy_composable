@@ -6,21 +6,25 @@ use bevy::prelude::*;
 use crate::tree::{ComponentTree, EntityCommandSet};
 
 pub trait ComplexSpawnable {
-    fn compose(&mut self, tree: ComponentTree) -> Entity;
+    fn compose(&mut self, tree: ComponentTree) -> EntityCommands;
+}
+
+pub trait ComplexSpawnableConsuming {
+    fn compose(&mut self, tree: ComponentTree) -> &mut Self;
 }
 
 impl ComplexSpawnable for Commands<'_, '_> {
-    fn compose(&mut self, tree: ComponentTree) -> Entity {
-        let entity = &mut self.spawn_empty();
-        compose_inner(entity, &tree);
-        entity.id()
+    fn compose(&mut self, tree: ComponentTree) -> EntityCommands {
+        let mut entity = self.spawn_empty();
+        compose_inner(&mut entity, &tree);
+        entity
     }
 }
 
-impl ComplexSpawnable for EntityCommands<'_> {
-    fn compose(&mut self, tree: ComponentTree) -> Entity {
+impl ComplexSpawnableConsuming for EntityCommands<'_> {
+    fn compose(&mut self, tree: ComponentTree) -> &mut Self {
         compose_inner(self, &tree);
-        self.id()
+        self
     }
 }
 
