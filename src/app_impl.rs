@@ -1,5 +1,6 @@
 use std::sync::Arc;
 
+use bevy::ecs::relationship::Relationship;
 use bevy::ecs::{relationship::RelatedSpawnerCommands, system::EntityCommands};
 use bevy::prelude::*;
 
@@ -28,7 +29,7 @@ impl ComplexSpawnableConsuming for EntityCommands<'_> {
     }
 }
 
-impl ComplexSpawnable for RelatedSpawnerCommands<'_, '_> {
+impl<R: Relationship> ComplexSpawnable for RelatedSpawnerCommands<'_, R> {
     fn compose(&mut self, tree: ComponentTree) -> EntityCommands {
         let mut entity = self.spawn_empty();
         compose_inner(&mut entity, &tree);
